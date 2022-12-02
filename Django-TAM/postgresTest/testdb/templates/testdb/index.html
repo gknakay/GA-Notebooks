@@ -1,0 +1,199 @@
+{% extends 'partials/base.html' %}
+
+{% block content %}
+
+    <div class = 'row mt-4'>
+        <!-- <div class = 'col-md-3'>
+            
+        </div> -->
+        <style type = "text/css">
+            .chartBox{
+                width: 800px;
+                height: 400px;
+                padding-left: 50px;
+            }
+        </style>
+        <div class="card-body" style="padding-bottom: 0.25rem; padding-top: 0.25rem;">
+            <h2>Bilanço Kalemleri</h2>
+                <form method="post" action = "" id="mappingForm">
+                   {% csrf_token %}
+                   <table>
+                       <tr>
+                          <td>Hisse: </td>
+                          <td>
+                              <select id="program" name="program" class="program-dropdown" style="width:400px;">
+                                 {% for stock in stock_list %}
+                                     <option value="{{ stock }}">{{ stock }}</option>
+                                 {% endfor %} 
+                                 
+                                 <!--<option> value = gokhan1 </option>
+                                 <option> value = gokhan2 </option>
+                                 <option> value = gokhan3 </option> -->
+                              </select>
+                          </td>
+                       </tr>                       
+                   </table>
+                   <button type="submit">Seç</button>       
+                </form>
+        </div>
+        
+
+
+        <div class = 'chartBox'>
+            <canvas id="myChart"></canvas>
+        </div>
+
+        <div class = 'chartBox'>
+            <canvas id="myChart1" ></canvas>
+        </div>
+
+        <div class = 'chartBox'>
+            <canvas id="myChart2" ></canvas>
+        </div>
+
+        <div class = 'chartBox'>
+            <canvas id="myChart3" ></canvas>
+        </div>
+
+        <div class = 'chartBox'>
+            <canvas id="myChart4" ></canvas>
+        </div>
+
+        <div class = 'col-md-8'>
+            
+            <script>
+                const ctx = document.getElementById('myChart').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: [{% for stock in stocks %} '{{ stock.index }}', {%endfor%} ],
+                        datasets: [{
+                            label: 'Dönen Varlıklar',
+                            data: [{% for stock in stocks %} {{ stock.donen_varliklar }}, {%endfor%} ],
+                            backgroundColor: [
+                               'black'
+                            ],
+                            borderColor: [
+                             'black'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+                const ctx1 = document.getElementById('myChart1').getContext('2d');
+                const myChart1 = new Chart(ctx1, {
+                    type: 'line',
+                    data: {
+                        labels: [{% for stock in stocks %} '{{ stock.index }}', {%endfor%} ],
+                        datasets: [{
+                            label: 'Duran Varlıklar',
+                            data: [{% for stock in stocks %} {{ stock.duran_varliklar }}, {%endfor%} ],
+                            backgroundColor: [
+                               'black'
+                            ],
+                            borderColor: [
+                             'black'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+                const ctx2 = document.getElementById('myChart2').getContext('2d');
+                const myChart2 = new Chart(ctx2, {
+                    type: 'line',
+                    data: {
+                        labels: [{% for stock in stocks %} '{{ stock.index }}', {%endfor%} ],
+                        datasets: [{
+                            label: 'Kısa Vadeli Yükümlülükler',
+                            data: [{% for stock in stocks %} {{ stock.kisa_vadeli_yukumlulukler }}, {%endfor%} ],
+                            backgroundColor: [
+                               'black'
+                            ],
+                            borderColor: [
+                             'black'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+                const ctx3 = document.getElementById('myChart3').getContext('2d');
+                const myChart3 = new Chart(ctx3, {
+                    type: 'line',
+                    data: {
+                        labels: [{% for stock in stocks %} '{{ stock.index }}', {%endfor%} ],
+                        datasets: [{
+                            label: 'Uzun Vadeli Yükümlülükler',
+                            data: [{% for stock in stocks %} {{ stock.uzun_vadeli_yukumlulukler }}, {%endfor%} ],
+                            backgroundColor: ['black'],
+                            borderColor: ['black'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {beginAtZero: true}
+                        }
+                    }
+                });
+                const ctx4 = document.getElementById('myChart4').getContext('2d');
+                const myChart4 = new Chart(ctx4, {
+                    type: 'line',
+                    data: {
+                        labels: [{% for stock in stocks %} '{{ stock.index }}', {%endfor%} ],
+                        datasets: [{
+                            label: 'Özkaynaklar',
+                            data: [{% for stock in stocks %} {{ stock.ozkaynaklar }}, {%endfor%} ],
+                            backgroundColor: ['black'],
+                            borderColor: ['black'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {beginAtZero: true}
+                        }
+                    }
+                });
+
+
+                
+            </script>
+        </div>     
+
+        
+
+   
+    </div>
+
+
+
+{% endblock %}
+
