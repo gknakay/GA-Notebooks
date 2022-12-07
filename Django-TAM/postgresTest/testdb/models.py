@@ -156,5 +156,5 @@ class Stocks(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'stocks'
+        db_table = 'stocks_2'
 
